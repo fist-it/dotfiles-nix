@@ -7,17 +7,36 @@
 let
   tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
   hyprland-session = "${pkgs.hyprland}/share/wayland-sessions";
-in {
+in
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+
   ];
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  nix.settings.trusted-users = [ "root" "fist-it" ];
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      sioyek = prev.sioyek.overrideAttrs (oldAttrs: {
+        postFixup = ''
+          wrapProgram $out/bin/sioyek \
+          --set QT_QPA_PLATFORM xcb \
+          --prefix LD_LIBRARY_PATH : "${
+            prev.lib.makeLibraryPath [ prev.pipewire ]
+          }"
+        '';
+      });
+    })
+  ];
+
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
+  programs.coolercontrol.enable = true;
+
   # hardware.pulseaudio.enable = true;
   # hardware.pulseaudio.support32Bit = true;
   # Bootloader.
@@ -105,8 +124,10 @@ in {
     pulse.enable = true;
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    # cudaSupport = true;
+  };
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # List packages installed in system profile. To search, run:
@@ -120,9 +141,32 @@ in {
     zoxide
     wineWowPackages.stable
     winetricks
+    gtk2
+    cudatoolkit
   ];
 
+  environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
+
   programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    libGL
+    glib
+    stdenv.cc.cc.lib
+    nspr
+    nss_latest
+    dbus
+    libxcb
+    atk
+    cups
+    expat
+    libxkbcommon
+    xorg.libX11
+    xorg.libXcomposite
+    xorg.libXdamage
+    xorg.libXext
+  ];
+
+  programs.dconf.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -136,8 +180,11 @@ in {
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
-    settings.PasswordAuthentication = true;
-    settings.PermitRootLogin = "no";
+    settings = {
+      PasswordAuthentication = true;
+      PermitRootLogin = "no";
+      AllowTcpForwarding = true;
+    };
   };
 
   # services.displayManager.ly = { enable = true; };
@@ -161,12 +208,6 @@ in {
     TTYReset = true;
     TTYVHangup = true;
     TTYVTDisallocate = true;
-  };
-
-
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
   };
 
   programs.steam = {

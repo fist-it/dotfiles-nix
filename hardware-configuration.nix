@@ -4,7 +4,9 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
@@ -12,6 +14,7 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   boot.supportedFilesystems = [ "ntfs" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/69b2410d-289b-4055-a17c-d11b75047fef";
@@ -41,6 +44,10 @@
   swapDevices =
     [{ device = "/dev/disk/by-uuid/95647e0f-b783-4d90-ba36-db7fb07f3629"; }];
 
+  nix.settings = {
+    substituters = [ "https://cache.nixos-cuda.org" ];
+    trusted-public-keys = [ "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M=" ];
+  };
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
