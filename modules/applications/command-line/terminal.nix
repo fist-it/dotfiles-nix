@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 
 {
 
@@ -9,16 +9,18 @@
     jq
     btop
     tmux
-    playerctl
-    spotify-player
     nmap
     stow
     just
     unzip
     p7zip
-    cursor-cli
     caligula
     dysk
+    tealdeer
+  ] ++ lib.optionals pkgs.stdenv.isLinux [
+    playerctl
+    spotify-player
+    cursor-cli
     nvtopPackages.nvidia
   ];
 }
