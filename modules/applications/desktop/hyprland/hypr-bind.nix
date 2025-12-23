@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   wayland.windowManager.hyprland.settings = {
@@ -47,16 +47,17 @@
       # Move workspace to monitor
       "$optMod CONTROL, W, movecurrentworkspacetomonitor, +1"
     ] ++ (
-      builtins.concatLists (builtins.genList (
-        x:
-        let
-          ws = let c = (x + 1) / 10; in builtins.toString (x + 1 - (c * 10));
-        in
-        [
-          "$optMod, ${ws}, workspace, ${toString (x+1)}"
-          "$optMod SHIFT, ${ws}, movetoworkspace, ${toString (x+1)}"
-        ]
-      ) 10)
+      builtins.concatLists (builtins.genList
+        (
+          x:
+          let
+            ws = let c = (x + 1) / 10; in builtins.toString (x + 1 - (c * 10));
+          in
+          [
+            "$optMod, ${ws}, workspace, ${toString (x+1)}"
+            "$optMod SHIFT, ${ws}, movetoworkspace, ${toString (x+1)}"
+          ]
+        ) 10)
     );
 
     bindm = [

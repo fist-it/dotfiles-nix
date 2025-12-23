@@ -17,7 +17,7 @@ in
 
   nix.settings.trusted-users = [ "root" "fist-it" ];
 
-  nixpkgs.overlays = [
+  nixpkgs.overlays = lib.mkIf pkgs.stdenv.isLinux [
     (final: prev: {
       sioyek = prev.sioyek.overrideAttrs (oldAttrs: {
         postFixup = ''
@@ -145,7 +145,7 @@ in
     cudatoolkit
   ];
 
-  environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
+  environment.pathsToLink = lib.mkIf pkgs.stdenv.isLinux [ "/share/applications" "/share/xdg-desktop-portal" ];
 
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
