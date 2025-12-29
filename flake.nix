@@ -22,7 +22,7 @@
       specialArgs = { inherit inputs; };
 
       modules = [
-        ./configuration.nix
+        ./hosts/nixPC
 
         home-manager.nixosModules.home-manager
         {
