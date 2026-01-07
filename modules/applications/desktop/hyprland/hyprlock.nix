@@ -1,23 +1,22 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 
-{
-  programs.hyprlock = {
-    enable = true;
-    settings = {
-      general = {
-        hide_cursor = true;
-      };
+let cfg = config.modules.applications.desktop.hyprland;
+in {
+  config = lib.mkIf cfg.enable {
 
-      background = [
-        {
+    programs.hyprlock = {
+      enable = true;
+      settings = {
+        general = { hide_cursor = true; };
+
+        background = [{
           monitor = "";
-          path = "${config.home.homeDirectory}/.config/wallpapers/mountains_mono.jpg";
+          path =
+            "${config.home.homeDirectory}/.config/wallpapers/mountains_mono.jpg";
           blur_passes = 3;
-        }
-      ];
+        }];
 
-      input-field = [
-        {
+        input-field = [{
           monitor = "";
           size = "20%, 5%";
           outline_thickness = 3;
@@ -39,39 +38,39 @@
           position = "0, -20";
           halign = "center";
           valign = "center";
-        }
-      ];
+        }];
 
-      label = [
-        {
-          monitor = "";
-          text = "$TIME";
-          font_size = 90;
-          font_family = "Hack Nerd Font";
-          position = "-30, 0";
-          halign = "center";
-          valign = "top";
-        }
-        {
-          monitor = "";
-          text = "cmd[update:60000] date +\"%A, %d %B %Y\"";
-          font_size = 25;
-          font_family = "Hack Nerd Font";
-          position = "-30, -150";
-          halign = "center";
-          valign = "top";
-        }
-        {
-          monitor = "";
-          text = "$LAYOUT[en,pl]";
-          font_size = 24;
-          onclick = "hyprctl switchxkblayout all next";
-          position = "280, -20";
-          halign = "center";
-          valign = "center";
-        }
-      ];
+        label = [
+          {
+            monitor = "";
+            text = "$TIME";
+            font_size = 90;
+            font_family = "Hack Nerd Font";
+            position = "-30, 0";
+            halign = "center";
+            valign = "top";
+          }
+          {
+            monitor = "";
+            text = ''cmd[update:60000] date +"%A, %d %B %Y"'';
+            font_size = 25;
+            font_family = "Hack Nerd Font";
+            position = "-30, -150";
+            halign = "center";
+            valign = "top";
+          }
+          {
+            monitor = "";
+            text = "$LAYOUT[en,pl]";
+            font_size = 24;
+            onclick = "hyprctl switchxkblayout all next";
+            position = "280, -20";
+            halign = "center";
+            valign = "center";
+          }
+        ];
 
+      };
     };
   };
 }

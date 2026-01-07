@@ -1,4 +1,4 @@
-{
+{ lib, ... }: {
   # imports = [ ./hyprland.nix ./hyprbind.nix ];
   imports = [
     ./hyprland.nix
@@ -8,4 +8,8 @@
     ./hyprlock.nix
     ./hyprpaper.nix
   ];
+
+  options.modules.applications.desktop.hyprland = {
+    enable = lib.mkEnableOption "Hyprland Configuration";
+  };
 }
