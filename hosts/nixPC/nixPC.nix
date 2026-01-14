@@ -7,8 +7,7 @@
 let
   tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
   hyprland-session = "${pkgs.hyprland}/share/wayland-sessions";
-in
-{
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -36,6 +35,7 @@ in
     enable32Bit = true;
   };
   programs.coolercontrol.enable = true;
+  programs.gamemode.enable = true;
 
   # hardware.pulseaudio.enable = true;
   # hardware.pulseaudio.support32Bit = true;
@@ -106,7 +106,7 @@ in
     isNormalUser = true;
     description = "fist it";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [ ];
+    packages = with pkgs; [ mangohud ];
     shell = pkgs.zsh;
   };
   users.defaultUserShell = pkgs.zsh;
@@ -145,7 +145,10 @@ in
     cudatoolkit
   ];
 
-  environment.pathsToLink = lib.mkIf pkgs.stdenv.isLinux [ "/share/applications" "/share/xdg-desktop-portal" ];
+  environment.pathsToLink = lib.mkIf pkgs.stdenv.isLinux [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+  ];
 
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [

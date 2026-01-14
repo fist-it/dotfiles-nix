@@ -39,6 +39,7 @@ in {
           "${pkgs.eww}/bin/eww open-many bar:first bar:second --arg first:screen=1 --arg second:screen=0"
 
           "${pkgs.swayidle}/bin/swayidle -w timeout 300 'hyprlock --grace 5'"
+          "${pkgs.swww}/bin/swww img ~/.config/wallpapers/the_narrows_from_staten_island.jpg"
         ];
 
         env = [ "XCURSOR_SIZE,24" "HYPRCURSOR_SIZE,24" ];

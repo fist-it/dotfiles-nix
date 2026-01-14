@@ -6,7 +6,8 @@
     ./hypr-rules.nix
     ./swayosd.nix
     ./hyprlock.nix
-    ./hyprpaper.nix
+    # ./hyprpaper.nix
+    ./swww
   ];
 
   options.modules.applications.desktop.hyprland = {

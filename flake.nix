@@ -24,6 +24,7 @@
       modules = [
         ./hosts/nixPC
 
+
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

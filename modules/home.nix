@@ -30,17 +30,9 @@
 
     # The home.packages option allows you to install Nix packages into your
     # environment.
-    home.packages = with pkgs; [
-      neovim
-      pure-prompt
-      qutebrowser
-      fastfetch
-      ripgrep
-      tree-sitter
-    ] ++ lib.optionals pkgs.stdenv.isLinux [
-      spotify
-      nordic
-    ];
+    home.packages = with pkgs;
+      [ neovim pure-prompt qutebrowser fastfetch ripgrep tree-sitter ]
+      ++ lib.optionals pkgs.stdenv.isLinux [ spotify nordic ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.
@@ -73,7 +65,6 @@
     #  /etc/profiles/per-user/fist-it/etc/profile.d/hm-session-vars.sh
     #
 
-
     gtk = lib.mkIf pkgs.stdenv.isLinux {
       enable = true;
       theme = {
@@ -90,9 +81,7 @@
       };
     };
 
-    qt = lib.mkIf pkgs.stdenv.isLinux {
-     enable = true;
-    };
+    qt = lib.mkIf pkgs.stdenv.isLinux { enable = true; };
 
     home.pointerCursor = lib.mkIf pkgs.stdenv.isLinux {
       gtk.enable = true;
