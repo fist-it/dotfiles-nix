@@ -20,9 +20,9 @@ in
       settings = {
         # Cursor
         cursor_shape = "block";
-        shell_integration = "no-cursor";
-        cursor_trail = 1;
-        cursor_trail_decay = "0.05 0.4";
+        shell_integration = "disabled";
+        # cursor_trail = 1;
+        # cursor_trail_decay = "0.05 0.4";
 
         # Background
         background_opacity = "0.97";

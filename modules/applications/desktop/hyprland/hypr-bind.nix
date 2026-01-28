@@ -40,7 +40,7 @@ in {
         "$mainMod, B, togglespecialworkspace, btop"
         "$mainMod CONTROL, B, exec, [workspace special btop; float; move 15% 15%; size 70% 70%] kitty -e btop"
 
-        "$mainMod SHIFT, 4, exec, ${pkgs.flameshot}/bin/flameshot gui -c -p ~/screenshots"
+        "$mainMod SHIFT, 4, exec, grim -g \"$(slurp -w 0)\""
 
         # Scroll through workspaces
         "$mainMod, mouse_down, workspace, e+1"

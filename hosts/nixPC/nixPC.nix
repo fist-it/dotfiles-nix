@@ -190,7 +190,6 @@ in {
     };
   };
 
-  # services.displayManager.ly = { enable = true; };
   programs.zsh.enable = true;
   services.greetd = {
     enable = true;

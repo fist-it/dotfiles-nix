@@ -35,6 +35,8 @@ in
       code-cursor
       coolercontrol.coolercontrol-gui
       keymapp
+      slurp
+      grim
     ];
 
     programs.rofi = lib.mkIf pkgs.stdenv.isLinux {

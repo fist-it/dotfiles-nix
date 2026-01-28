@@ -22,5 +22,6 @@
     spotify-player
     cursor-cli
     nvtopPackages.nvidia
+    socat # Unix socket tool
   ];
 }
