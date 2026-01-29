@@ -41,6 +41,7 @@ in {
         "$mainMod CONTROL, B, exec, [workspace special btop; float; move 15% 15%; size 70% 70%] kitty -e btop"
 
         "$mainMod SHIFT, 4, exec, grim -g \"$(slurp -w 0)\""
+        "$mainMod SHIFT, S, exec, grim -g \"$(slurp)\" -t png - | wl-copy"
 
         # Scroll through workspaces
         "$mainMod, mouse_down, workspace, e+1"

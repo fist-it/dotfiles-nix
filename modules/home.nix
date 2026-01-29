@@ -90,7 +90,10 @@
       size = 28;
     };
 
-    home.sessionVariables = { EDITOR = "nvim"; };
+    home.sessionVariables = {
+      EDITOR = "nvim";
+      GRIM_DEFAULT_DIR = "~/Pictures/Screenshots/";
+    };
 
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
