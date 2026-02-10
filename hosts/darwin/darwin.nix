@@ -5,7 +5,7 @@
     ./brew.nix
   ];
 
-  system.primaryUser = "fist_it";
+  system.primaryUser = "fist-it";
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs;
@@ -35,9 +35,9 @@
   programs.zsh.enable = true;
   # services.nix-daemon.enable = true;
 
-  users.users.fist_it = {
-    name = "fist_it";
-    home = "/Users/fist_it";
+  users.users.fist-it = {
+    name = "fist-it";
+    home = "/Users/fist-it";
     uid = 501;
   };
 }

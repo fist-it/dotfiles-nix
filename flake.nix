@@ -13,6 +13,7 @@
       url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
   };
 
   outputs = { self, nixpkgs, home-manager, darwin, ... }@inputs: {
@@ -68,11 +69,11 @@
             home-manager.extraSpecialArgs = { inherit inputs; };
 
             # Point directly to your existing user config
-            home-manager.users.fist_it = { ... }: {
+            home-manager.users.fist-it = { ... }: {
               imports = [ ./modules/home.nix ];
               sysInfo = {
-                username = "fist_it";
-                homeDirectory = "/Users/fist_it";
+                username = "fist-it";
+                homeDirectory = "/Users/fist-it";
               };
               modules.applications.desktop = {
                 enable = false;

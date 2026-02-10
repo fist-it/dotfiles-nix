@@ -7,5 +7,6 @@
     ./web.nix
     ./latex.nix
     ./java.nix
+    ./lua.nix
   ];
 }

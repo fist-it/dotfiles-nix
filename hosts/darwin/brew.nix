@@ -55,6 +55,8 @@
       "spicetify-cli"
       "tailscale"
       "tree"
+      "tree-sitter-cli"
+      "libiconv"
     ];
 
     # Aplikacje z Mac App Store (wymaga bycia zalogowanym w App Store)
@@ -63,7 +65,7 @@
       # "Xcode" = 497799835;
       # "Messenger" = 1480068668;
       "AdGuard for Safari" = 1440147259;
-      "Balatro" = 6502451661;
+#      "Balatro" = 6502451661;
       "Hand Mirror" = 1502839586;
       "Lockera Widgets" = 6466819847;
       "Pages" = 409201541;

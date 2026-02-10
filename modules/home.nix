@@ -31,7 +31,7 @@
     # The home.packages option allows you to install Nix packages into your
     # environment.
     home.packages = with pkgs;
-      [ neovim pure-prompt qutebrowser fastfetch ripgrep tree-sitter ]
+      [ neovim pure-prompt qutebrowser fastfetch ripgrep ]
       ++ lib.optionals pkgs.stdenv.isLinux [ spotify nordic ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage

@@ -30,6 +30,8 @@ in
 
         # Window Behavior (Standard defaults you might want explicitly)
         confirm_os_window_close = 0;
+
+        hide_window_decorations = "titlebar-only";
       };
 
       # Theme Loading
