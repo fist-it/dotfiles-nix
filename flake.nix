@@ -25,7 +25,6 @@
       modules = [
         ./hosts/nixPC
 
-
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -52,37 +51,36 @@
       ];
     };
 
-    darwinConfigurations.darwin = darwin.lib.darwinSystem
-      {
-        specialArgs = { inherit self inputs; };
+    darwinConfigurations.darwin = darwin.lib.darwinSystem {
+      specialArgs = { inherit self inputs; };
 
-        modules = [
-          ./hosts/darwin
+      modules = [
+        ./hosts/darwin
 
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "old";
+        home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.backupFileExtension = "old";
 
-            # Pass inputs to home-manager so you can use them in home.nix
-            home-manager.extraSpecialArgs = { inherit inputs; };
+          # Pass inputs to home-manager so you can use them in home.nix
+          home-manager.extraSpecialArgs = { inherit inputs; };
 
-            # Point directly to your existing user config
-            home-manager.users.fist-it = { ... }: {
-              imports = [ ./modules/home.nix ];
-              sysInfo = {
-                username = "fist-it";
-                homeDirectory = "/Users/fist-it";
-              };
-              modules.applications.desktop = {
-                enable = false;
-                hyprland.enable = false;
-                xdg-entries = false;
-              };
+          # Point directly to your existing user config
+          home-manager.users.fist-it = { ... }: {
+            imports = [ ./modules/home.nix ];
+            sysInfo = {
+              username = "fist-it";
+              homeDirectory = "/Users/fist-it";
             };
-          }
-        ];
-      };
+            modules.applications.desktop = {
+              enable = false;
+              hyprland.enable = false;
+              xdg-entries = false;
+            };
+          };
+        }
+      ];
+    };
   };
 }

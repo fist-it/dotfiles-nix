@@ -137,7 +137,6 @@ in {
     wget
     git
     polkit
-    xdg-desktop-portal-hyprland
     zoxide
     wineWowPackages.stable
     winetricks
@@ -149,6 +148,14 @@ in {
     "/share/applications"
     "/share/xdg-desktop-portal"
   ];
+
+  xdg.portal = {
+    enable = true;
+    extraPortals =
+      [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
+
+  };
 
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [

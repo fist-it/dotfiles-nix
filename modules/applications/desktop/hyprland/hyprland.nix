@@ -1,7 +1,6 @@
 { pkgs, config, lib, ... }:
 
-let
-  cfg = config.modules.applications.desktop.hyprland;
+let cfg = config.modules.applications.desktop.hyprland;
 in {
   config = lib.mkIf cfg.enable {
 
@@ -37,6 +36,8 @@ in {
         "$menu" = "rofi -show drun";
 
         exec-once = [
+
+          "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
           "${pkgs.eww}/bin/eww open-many bar:first bar:second --arg first:screen=1 --arg second:screen=0"
 
           "${pkgs.swayidle}/bin/swayidle -w timeout 300 'hyprlock --grace 5'"
