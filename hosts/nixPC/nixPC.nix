@@ -170,10 +170,10 @@ in {
     cups
     expat
     libxkbcommon
-    xorg.libX11
-    xorg.libXcomposite
-    xorg.libXdamage
-    xorg.libXext
+    libX11
+    libXcomposite
+    libXdamage
+    libXext
   ];
 
   programs.dconf.enable = true;
