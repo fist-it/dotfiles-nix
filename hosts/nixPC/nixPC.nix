@@ -2,19 +2,27 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }:
+{ config
+, lib
+, pkgs
+, ...
+}:
 
 let
   tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
   hyprland-session = "${pkgs.hyprland}/share/wayland-sessions";
-in {
+in
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
 
   ];
 
-  nix.settings.trusted-users = [ "root" "fist-it" ];
+  nix.settings.trusted-users = [
+    "root"
+    "fist-it"
+  ];
 
   nixpkgs.overlays = [
     (final: prev: {
@@ -22,9 +30,7 @@ in {
         postFixup = ''
           wrapProgram $out/bin/sioyek \
           --set QT_QPA_PLATFORM xcb \
-          --prefix LD_LIBRARY_PATH : "${
-            prev.lib.makeLibraryPath [ prev.pipewire ]
-          }"
+          --prefix LD_LIBRARY_PATH : "${prev.lib.makeLibraryPath [ prev.pipewire ]}"
         '';
       });
     })
@@ -105,7 +111,12 @@ in {
   users.users.fist-it = {
     isNormalUser = true;
     description = "fist it";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "libvirtd"
+    ];
     packages = with pkgs; [ mangohud ];
     shell = pkgs.zsh;
   };
@@ -113,7 +124,10 @@ in {
 
   services.tailscale.enable = true;
 
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    libvirtd.enable = true;
+  };
   hardware.nvidia-container-toolkit.enable = true;
 
   security.rtkit.enable = true;
@@ -128,7 +142,10 @@ in {
     allowUnfree = true;
     # cudaSupport = true;
   };
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -151,8 +168,10 @@ in {
 
   xdg.portal = {
     enable = true;
-    extraPortals =
-      [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-hyprland
+      pkgs.xdg-desktop-portal-gtk
+    ];
     config.common.default = "*";
 
   };
@@ -202,8 +221,7 @@ in {
     enable = true;
     settings = {
       default_session = {
-        command =
-          "${tuigreet} --time --remember --remember-session --sessions ${hyprland-session}";
+        command = "${tuigreet} --time --remember --remember-session --sessions ${hyprland-session}";
         user = "greeter";
       };
     };

@@ -10,7 +10,7 @@ in {
 
 
         "match:class ^(discord)$, workspace 4 silent"
-        "match:class ^(Spotify)$, workspace special:spotify, pseudo on, fullscreen off, size (window_w * 0.5) (window_h * 0.5)" 
+        "match:class ^(spotify)$, workspace special:spotify, pseudo on, fullscreen off, size (window_w * 0.5) (window_h * 0.5)" 
       ];
 
       layerrule = [

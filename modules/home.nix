@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config
+, pkgs
+, lib
+, ...
+}:
 
 {
   options.sysInfo = {
@@ -11,7 +15,10 @@
       description = "Home directory path";
     };
   };
-  imports = [ ./dev ./applications ];
+  imports = [
+    ./dev
+    ./applications
+  ];
 
   config = {
     # Home Manager needs a bit of information about you and the paths it should
@@ -30,9 +37,19 @@
 
     # The home.packages option allows you to install Nix packages into your
     # environment.
-    home.packages = with pkgs;
-      [ neovim pure-prompt qutebrowser fastfetch ripgrep ]
-      ++ lib.optionals pkgs.stdenv.isLinux [ spotify nordic ];
+    home.packages =
+      with pkgs;
+      [
+        neovim
+        pure-prompt
+        qutebrowser
+        fastfetch
+        ripgrep
+      ]
+      ++ lib.optionals pkgs.stdenv.isLinux [
+        spotify
+        nordic
+      ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.

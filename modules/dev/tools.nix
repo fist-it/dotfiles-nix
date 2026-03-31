@@ -2,10 +2,8 @@
 
 {
   home.packages = with pkgs; [
-    uv
-    stdenv.cc.cc.lib
-    jetbrains.pycharm
-    python3
+    windsurf
   ];
+
 
 }

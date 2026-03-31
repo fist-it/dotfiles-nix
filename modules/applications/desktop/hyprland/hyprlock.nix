@@ -12,7 +12,7 @@ in {
         background = [{
           monitor = "";
           path =
-            "${config.home.homeDirectory}/.config/wallpapers/mountains_mono.jpg";
+            "${config.home.homeDirectory}/.config/wallpapers/the_narrows_from_staten_island.jpg";
           blur_passes = 3;
         }];
 

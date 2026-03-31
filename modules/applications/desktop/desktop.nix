@@ -1,4 +1,8 @@
-{ pkgs, config, lib, ... }:
+{ pkgs
+, config
+, lib
+, ...
+}:
 
 let
   cfg = config.modules.applications.desktop;
@@ -18,30 +22,41 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      firefox
-      keepassxc
-      sioyek
-      anki
-    ] ++ lib.optionals pkgs.stdenv.isLinux [
-      spotify
-      tor-browser
-      pavucontrol
-      nemo
-      krita
-      transmission_4-gtk
-      mpv
-      google-chrome
-      code-cursor
-      coolercontrol.coolercontrol-gui
-      keymapp
-      slurp
-      grim
-    ];
+    home.packages =
+      with pkgs;
+      [
+        firefox
+        keepassxc
+        sioyek
+        anki
+      ]
+      ++ lib.optionals pkgs.stdenv.isLinux [
+        spotify
+        tor-browser
+        pavucontrol
+        nemo
+        krita
+        transmission_4-gtk
+        mpv
+        google-chrome
+        code-cursor
+        coolercontrol.coolercontrol-gui
+        keymapp
+        slurp
+        grim
+        niri
+      ];
 
     programs.rofi = lib.mkIf pkgs.stdenv.isLinux {
       enable = true;
-      modes = [ "drun" "ssh" ];
+      modes = [
+        "drun"
+        "ssh"
+      ];
+    };
+
+    services.remmina = lib.mkIf pkgs.stdenv.isLinux {
+      enable = true;
     };
 
     xdg.desktopEntries = lib.mkIf cfg.xdg-entries {
@@ -55,12 +70,16 @@ in
         name = "Firefox Private";
         exec = "firefox --private-window %U";
         terminal = false;
-        categories = [ "Network" "WebBrowser" ];
+        categories = [
+          "Network"
+          "WebBrowser"
+        ];
         genericName = "Incognito Web Browser";
       };
     };
 
-    programs.discord = { enable = true; };
+    programs.discord = {
+      enable = true;
+    };
   };
 }
-

@@ -8,5 +8,6 @@
     ./latex.nix
     ./java.nix
     ./lua.nix
+    ./tools.nix
   ];
 }
