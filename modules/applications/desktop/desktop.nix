@@ -42,6 +42,7 @@ in
         code-cursor
         coolercontrol.coolercontrol-gui
         keymapp
+        kontroll
         slurp
         grim
         niri
