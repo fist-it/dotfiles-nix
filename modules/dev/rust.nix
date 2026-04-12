@@ -3,8 +3,7 @@
 {
   home.packages = with pkgs;
     [
-      cargo
-
+      rustup
     ];
 
 }

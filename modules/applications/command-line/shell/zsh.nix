@@ -2,7 +2,6 @@
 {
   programs.zsh = {
     enable = true;
-    # TODO replace .zshrc by home manager
     oh-my-zsh = {
       enable = true;
       theme = "";
@@ -82,6 +81,7 @@
       # PATH additions
       export PATH=$PATH:~/.spicetify
       export PATH=$PATH:~/.ghcup/bin
+      export PATH=$PATH:~/.cargo/bin
     '';
   };
 }

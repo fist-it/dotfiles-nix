@@ -11,6 +11,11 @@
 let
   tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
   hyprland-session = "${pkgs.hyprland}/share/wayland-sessions";
+
+  kubeMasterIP = "127.0.0.1";
+  kubeMasterHostname = "localhost";
+  kubeMasterAPIServerPort = 6443;
+
 in
 {
   imports = [
@@ -68,9 +73,9 @@ in
       dns = "none";
     };
     nameservers = [ "1.1.1.1" ];
-    dhcpcd.extraConfig = ''
-      nohook resolv.conf
-    '';
+
+    extraHosts = "${kubeMasterIP} ${kubeMasterHostname}";
+    nftables.enable = true;
   };
 
   # Set your time zone.
@@ -116,6 +121,7 @@ in
       "wheel"
       "docker"
       "libvirtd"
+      "kubernetes"
     ];
     packages = with pkgs; [ mangohud ];
     shell = pkgs.zsh;
@@ -214,6 +220,24 @@ in
       PermitRootLogin = "no";
       AllowTcpForwarding = true;
     };
+  };
+
+  services.kubernetes = {
+    roles = [
+      "master"
+      "node"
+    ];
+
+    masterAddress = kubeMasterHostname;
+    apiserverAddress = "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
+    easyCerts = true;
+    apiserver = {
+      securePort = kubeMasterAPIServerPort;
+      advertiseAddress = kubeMasterIP;
+    };
+
+    addons.dns.enable = true;
+    kubelet.extraOpts = "--fail-swap-on=true";
   };
 
   programs.zsh.enable = true;
