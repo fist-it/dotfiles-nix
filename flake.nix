@@ -18,6 +18,11 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -26,6 +31,7 @@
     , home-manager
     , darwin
     , sops-nix
+    , nixos-wsl
     , ...
     }@inputs:
     {
@@ -68,6 +74,46 @@
                 enable = true;
                 hyprland.enable = true;
                 xdg-entries = true;
+              };
+            };
+          }
+        ];
+      };
+
+      nixosConfigurations.nixWsl = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit inputs;
+        };
+        modules = [
+          nixos-wsl.nixosModules.default
+          {
+            system.stateVersion = "25.05";
+            wsl.enable = true;
+          }
+
+          ./hosts/wsl
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+
+            # Pass inputs to home-manager so you can use them in home.nix
+            home-manager.extraSpecialArgs = { inherit inputs; };
+
+            # Point directly to your existing user config
+            home-manager.users.fist-it = {
+              imports = [ ./modules/home.nix ];
+              sysInfo = {
+                username = "fist-it";
+                homeDirectory = "/home/fist-it";
+              };
+              modules.applications.desktop = {
+                enable = false;
+                hyprland.enable = false;
+                xdg-entries = false;
               };
             };
           }
