@@ -2,11 +2,11 @@
 
 {
   home.packages = with pkgs; [
-    windsurf
-
+    claude-code
     terraform
     kompose
     kubectl
     kubernetes
+    wireshark
   ];
 }
