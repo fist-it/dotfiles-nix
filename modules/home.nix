@@ -96,6 +96,7 @@
         name = "Hack Nerd Font";
         size = 11;
       };
+      gtk4.theme = config.gtk.theme;
     };
 
     qt = lib.mkIf pkgs.stdenv.isLinux { enable = true; };
