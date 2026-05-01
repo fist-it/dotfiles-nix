@@ -1,7 +1,13 @@
-{ pkgs, config, lib, ... }:
+{ pkgs
+, config
+, lib
+, ...
+}:
 
-let cfg = config.modules.applications.desktop.hyprland;
-in {
+let
+  cfg = config.modules.applications.desktop.hyprland;
+in
+{
   config = lib.mkIf cfg.enable {
 
     home.packages = with pkgs; [
@@ -22,7 +28,7 @@ in {
 
         monitor = [
           "DP-2, 2560x1440@144, auto, 1"
-          "DP-3, 2560x1440@144, auto-left, 1"
+          "DP-3, 2560x1440@144, auto-left, 1, transform, 1"
         ];
 
         # ---------------------------------------------------------
@@ -41,16 +47,20 @@ in {
           "${pkgs.eww}/bin/eww open-many bar:first bar:second --arg first:screen=1 --arg second:screen=0"
 
           "${pkgs.swayidle}/bin/swayidle -w timeout 300 'hyprlock --grace 5'"
-          "${pkgs.swww}/bin/swww img ~/.config/wallpapers/the_narrows_from_staten_island.jpg"
+          "${pkgs.awww}/bin/awww img ~/.config/wallpapers/the_narrows_from_staten_island.jpg"
+          # "secret-tool lookup keepassxc main_db | keepassxc --pw-stdin ${config.home.homeDirectory}/Documents/.private/keepass/Passwords.kdbx &"
         ];
 
-        env = [ "XCURSOR_SIZE,24" "HYPRCURSOR_SIZE,24" ];
+        env = [
+          "XCURSOR_SIZE,24"
+          "HYPRCURSOR_SIZE,24"
+        ];
 
         general = {
           gaps_in = 5;
           gaps_out = 20;
           border_size = 2;
-          "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+          "col.active_border" = "rgba(b2b2bdee) rgba(d9cbb1ee) 45deg";
           "col.inactive_border" = "rgba(595959aa)";
           resize_on_border = false;
           allow_tearing = false;
@@ -114,7 +124,9 @@ in {
           preserve_split = true;
         };
 
-        master = { new_status = "master"; };
+        master = {
+          new_status = "master";
+        };
 
         misc = {
           force_default_wallpaper = -0;
@@ -128,7 +140,9 @@ in {
           kb_layout = "pl";
           follow_mouse = 1;
           sensitivity = -0.5;
-          touchpad = { natural_scroll = false; };
+          touchpad = {
+            natural_scroll = false;
+          };
         };
 
         # Per-device config
@@ -141,4 +155,3 @@ in {
     };
   };
 }
-
