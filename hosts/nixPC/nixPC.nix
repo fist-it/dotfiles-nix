@@ -38,6 +38,9 @@ in
           --prefix LD_LIBRARY_PATH : "${prev.lib.makeLibraryPath [ prev.pipewire ]}"
         '';
       });
+      openvpn = prev.openvpn.override {
+        openssl = prev.openssl_legacy;
+      };
     })
   ];
 
@@ -161,10 +164,12 @@ in
     git
     polkit
     zoxide
-    wineWowPackages.stable
+    wineWow64Packages.stable
     winetricks
     gtk2
     cudatoolkit
+    age
+    sops
   ];
 
   environment.pathsToLink = lib.mkIf pkgs.stdenv.isLinux [
@@ -237,7 +242,7 @@ in
     };
 
     addons.dns.enable = true;
-    kubelet.extraOpts = "--fail-swap-on=true";
+    kubelet.extraOpts = "--fail-swap-on=false";
   };
 
   programs.zsh.enable = true;
@@ -266,6 +271,32 @@ in
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
+  };
+
+  sops = {
+    defaultSopsFile = ../../secrets/openvpn.yaml;
+    defaultSopsFormat = "yaml";
+    age = {
+      # Decrypt using the machine's SSH host key (no manual key needed at boot)
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      # Also allow your personal age key when editing secrets interactively
+      keyFile = "/home/fist-it/.config/sops/age/keys.txt";
+      generateKey = false;
+    };
+    secrets.openvpn-credentials = {
+      # Decrypted file lands at /run/secrets/openvpn-credentials (tmpfs, not on disk)
+      mode = "0400";
+      owner = "root";
+    };
+  };
+
+  services.openvpn.servers = {
+    etiVPN = {
+      config = ''
+        config /var/lib/openvpn/eti_vpn/vpnWETI.ovpn
+        auth-user-pass /run/secrets/openvpn-credentials
+      '';
+    };
   };
 
   # Open ports in the firewall.
